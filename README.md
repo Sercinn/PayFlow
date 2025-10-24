@@ -5,8 +5,8 @@ A payment gateway system that merchants can integrate into their websites.
 Run the backend which is located in src/main/java/PayFlowApplication.java  
 Run the demo Merchant Portal page in demo/portal.html  
 Run the demo User Checkout page in demo/checkout.html  
-
-Notes:
+  
+Notes:  
 -Email cannot be already used  
 -Passwords have to match when registering  
 -Demo checkout page has a set merchant id of 1. The first merchant account that is registered also has a merchant id of 1    
