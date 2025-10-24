@@ -1,0 +1,31 @@
+<h2>Merchant Login</h2>
+<input id="email" placeholder="Email"><br>
+<input id="password" placeholder="Password" type="password"><br>
+<button onclick="login()">Login</button>
+
+<p>Don’t have an account? <a href="register.html">Register here</a></p>
+
+<script>
+async function login() {
+  const res = await fetch("http://localhost:8080/api/merchants/login", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value
+    })
+  });
+
+  const data = await res.json();
+  if (data.apiKey) {
+    localStorage.setItem("merchantId", data.id);
+    localStorage.setItem("apiKey", data.apiKey);
+    localStorage.setItem("merchantName", data.username);
+
+    alert(`Welcome ${data.username}!`);
+    window.location.href = "portal.html";
+  } else {
+    alert(data.error || "Login failed");
+  }
+}
+</script>

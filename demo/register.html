@@ -1,0 +1,31 @@
+<h2>Merchant Registration</h2>
+<input id="username" placeholder="Name"><br>
+<input id="email" placeholder="Email"><br>
+<input id="password" placeholder="Password" type="password"><br>
+<input id="password2" placeholder="Confirm Password" type="password"><br>
+<button onclick="register()">Register</button>
+
+<p>Already have an account? <a href="login.html">Login here</a></p>
+
+<script>
+async function register() {
+  const res = await fetch("http://localhost:8080/api/merchants/register", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      username: document.getElementById("username").value,
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value,
+      password2: document.getElementById("password2").value
+    })
+  });
+
+  const data = await res.json();
+  if (data.apiKey) {
+    alert("Registration successful! Please log in.");
+    window.location.href = "login.html";
+  } else {
+    alert(data.error || "Registration failed");
+  }
+}
+</script>

@@ -1,0 +1,19 @@
+<html>
+<head>
+  <title>Checkout</title>
+  <script src="../sdk/payflow.js"></script>
+</head>
+<body>
+  <h2>Product: Samsung TV - $1000.99</h2>
+  <div id="payflow-form"></div>
+
+  <script>
+    loadPayflowWidget({
+      containerId: "payflow-form",
+      apiBase: "http://localhost:8080",
+      amount: 1000.99,
+      merchantId: 1 // merchant id of 1
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<h2>Welcome, <span id="merchant-name"></span></h2>
+<button onclick="logout()">Logout</button>
+
+<h3>Your Transactions</h3>
+<table id="tx-table">
+  <thead><tr><th>ID</th><th>Customer</th><th>Status</th><th>Amount</th></tr></thead>
+  <tbody></tbody>
+</table>
+
+<script>
+  if (!localStorage.getItem("apiKey")) {
+    window.location.href = "login.html";
+  }
+
+  document.getElementById("merchant-name").textContent = localStorage.getItem("merchantName");
+
+  async function loadTransactions() {
+    const merchantId = localStorage.getItem("merchantId");
+    const apiKey = localStorage.getItem("apiKey");
+    const res = await fetch(`http://localhost:8080/api/transactions/merchant/${merchantId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey // in the future we should use this api key to do security checks
+      }
+    });
+    const data = await res.json();
+    const tbody = document.querySelector("#tx-table tbody");
+    data.forEach(tx => {
+      tbody.innerHTML += `<tr><td>${tx.id}</td><td>${tx.customerName}</td><td>${tx.status}</td><td>${tx.amount}</td></tr>`;
+    });
+  }
+  loadTransactions();
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+  }
+</script>
+
